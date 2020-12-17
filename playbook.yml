@@ -1,0 +1,23 @@
+--- 
+- 
+  become: false
+  gather_facts: true
+  hosts: all
+  tasks: 
+    - 
+      debug: "msg=\"{{ ansible_distribution }}\""
+      name: Distribution
+    - 
+      debug: "msg=\"{{ ansible_distribution_version}}\""
+      name: "Distribution version"
+    - 
+      debug: "msg=\"{{ ansible_distribution_major_version }}\""
+      name: "Distribution major version"
+    - 
+      name: "Intsall Apache WebServer"
+      yum: "name=httpd state=latest"
+    - 
+      name: "Start Apache"
+      service: "name=httpd state=started enabled=yes"
+      when: "ansible_distribution == \"CentOS\""
+
